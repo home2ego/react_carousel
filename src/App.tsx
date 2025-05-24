@@ -60,10 +60,16 @@ export default function App() {
   const { step, frameSize, itemWidth, animationDuration, infinite } = state;
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement> | null,
+    e: React.ChangeEvent<HTMLInputElement>,
     type: Action['type'],
   ) => {
-    const payload = e ? +e.target.value : !infinite;
+    let payload;
+
+    if (type === 'SET_INFINITE') {
+      payload = e.target.checked;
+    } else {
+      payload = +e.target.value;
+    }
 
     dispatch({ type, payload } as Action);
   };
@@ -144,7 +150,7 @@ export default function App() {
               type="checkbox"
               className="form__input"
               checked={infinite}
-              onChange={() => handleChange(null, 'SET_INFINITE')}
+              onChange={e => handleChange(e, 'SET_INFINITE')}
             />
           </div>
         </form>

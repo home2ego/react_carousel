@@ -22,15 +22,25 @@ export default function Carousel({
   const maxIndex = images.length - frameSize;
 
   const handleNextClick = () => {
-    setCurrentIndex(
-      currentIndex !== maxIndex ? Math.min(currentIndex + step, maxIndex) : 0,
-    );
+    switch (true) {
+      case currentIndex < maxIndex:
+        setCurrentIndex(Math.min(currentIndex + step, maxIndex));
+        break;
+      case infinite:
+        setCurrentIndex(0);
+        break;
+    }
   };
 
   const handlePrevClick = () => {
-    setCurrentIndex(
-      currentIndex !== 0 ? Math.max(currentIndex - step, 0) : maxIndex,
-    );
+    switch (true) {
+      case currentIndex > 0:
+        setCurrentIndex(Math.max(currentIndex - step, 0));
+        break;
+      case infinite:
+        setCurrentIndex(maxIndex);
+        break;
+    }
   };
 
   return (
